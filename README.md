@@ -4,8 +4,6 @@
 [![Version](https://img.shields.io/cocoapods/v/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
 [![License](https://img.shields.io/cocoapods/l/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
-
-
 [![Swift Version](https://img.shields.io/badge/Swift-4.2-orange.svg)](https://swift.org/)
 [![Swift Version](https://img.shields.io/badge/iOS-9.0-green.svg)](https://www.apple.com/ios/ios-9/)
 
@@ -49,73 +47,62 @@ import SwiftPagingTabView
 import UIKit
 import SwiftPagingTabView
 
-public lazy var pagingTabView: PagingTabView = {
-let pagingTabView: PagingTabView = PagingTabView()
-pagingTabView.config = PagingTabViewConfig()
-pagingTabView.delegate = self
-pagingTabView.datasource = self
+class ViewController: UIViewController {
 
-return pagingTabView
-}()
+    public lazy var pagingTabView: PagingTabView = {
+        let pagingTabView: PagingTabView = PagingTabView()
+        pagingTabView.config = PagingTabViewConfig()
+        pagingTabView.delegate = self
+        pagingTabView.datasource = self
 
+        return pagingTabView
+    }()
 
-override func viewDidLoad() {
-super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-self.view.addSubview(pagingTabView)
+        self.view.addSubview(pagingTabView)
 
-pagingTabView.reloadAndSetup()
-}
+        pagingTabView.reloadAndSetup()
+    }
 
 extension ViewController: PagingTabViewDelegate {
-func pagingTabView(pagingTabView: PagingTabView, toIndex: Int) {
-print("Switch to paging tab view: \(toIndex)")
-}
+    func pagingTabView(pagingTabView: PagingTabView, toIndex: Int) {
+        print("Switch to paging tab view: \(toIndex)")
+    }
 
-func reconfigure(pagingTabView: PagingTabView) {
-pagingTabView.tabButtons.forEach { (tabButton) in
-tabButton.configure(config: TabButtonConfig())
-}
-}
+    func reconfigure(pagingTabView: PagingTabView) {
+        pagingTabView.tabButtons.forEach { (tabButton) in
+            tabButton.configure(config: TabButtonConfig())
+        }
+    }
 }
 extension ViewController: PagingTabViewDataSource {
-func segments(pagingTabView: PagingTabView) -> Int {
-return 4
-}
+    func segments(pagingTabView: PagingTabView) -> Int {
+        return 4
+    }
 
-func tabTitle(pagingTabView: PagingTabView, index: Int) -> (image: UIImage?, title: String?) {
-if commandView.isEnableImageTitle {
-return (image: UIImage(named: "menu"),
-title: "TAB标签_" + String(index))
-} else {
-return (image: nil,
-title: "TAB标签_" + String(index))
-}
-}
+    func tabTitle(pagingTabView: PagingTabView, index: Int) -> (image: UIImage?, title: String?) {
+        if commandView.isEnableImageTitle {
+            return (image: UIImage(named: "menu"),
+                    title: "TAB标签_" + String(index))
+        } else {
+            return (image: nil,
+                    title: "TAB标签_" + String(index))
+        }
+    }
 
-func tabView(pagingTabView: PagingTabView, index: Int) -> UIView {
-if index == 0 {
-return commandView
-} else {
-let view = UILabel()
-view.backgroundColor = UIColor.white
-view.text = "View " + String(index)
-view.textAlignment = .center
-return view
-}
-}
-}
-```
-#### Added SwipeUICollectionViewDelegate  
-Delegate when the tap event recognized. If the cell was seleced, deselect the cell item and trigger the delegation *didDeselectItemAt*, otherwise just trigger the *didSelectItemAtByTapped* in *SwipeUICollectionViewDelegate* like blow.    
-```swift
-import SwipeSelectingCollectionView2
-
-extension ViewController: SwipeUICollectionViewDelegate {
-func collectionView(_ collectionView: UICollectionView, didSelectItemAtByTapped indexPath: IndexPath) {
-print("didSelectItemAtByTapped: \(indexPath)")
-collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-}
+    func tabView(pagingTabView: PagingTabView, index: Int) -> UIView {
+        if index == 0 {
+            return commandView
+        } else {
+            let view = UILabel()
+            view.backgroundColor = UIColor.white
+            view.text = "View " + String(index)
+            view.textAlignment = .center
+            return view
+        }
+    }
 }
 ```
 
