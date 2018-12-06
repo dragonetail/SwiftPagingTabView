@@ -1,11 +1,10 @@
 # SwiftPagingTabView
 
-[![CI Status](https://img.shields.io/travis/dragonetail/SwiftPagingTabView.svg?style=flat)](https://travis-ci.org/dragonetail/SwiftPagingTabView)
 [![Version](https://img.shields.io/cocoapods/v/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
-[![License](https://img.shields.io/cocoapods/l/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
 [![Swift Version](https://img.shields.io/badge/Swift-4.2-orange.svg)](https://swift.org/)
 [![Swift Version](https://img.shields.io/badge/iOS-9.0-green.svg)](https://www.apple.com/ios/ios-9/)
+[![License](https://img.shields.io/cocoapods/l/SwiftPagingTabView.svg?style=flat)](https://cocoapods.org/pods/SwiftPagingTabView)
 
 ![](./Assets/demo.gif)
 
