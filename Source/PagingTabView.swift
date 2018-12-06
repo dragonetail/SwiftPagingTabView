@@ -13,22 +13,22 @@ public protocol PagingTabViewDataSource: NSObjectProtocol {
 }
 
 open class PagingTabView: UIView {
-    open var config: PagingTabViewConfig = PagingTabViewConfig()
+    public var config: PagingTabViewConfig = PagingTabViewConfig()
     public weak var delegate: PagingTabViewDelegate?
     public weak var datasource: PagingTabViewDataSource!
 
-    private var curSelectedIndex = -1
-    private var animationInProgress = false
+    var curSelectedIndex = -1
+    var animationInProgress = false
 
-    open var tabButtons = [TabButton]()
-    open var tabViews = [UIView]()
+    public var tabButtons = [TabButton]()
+    public var tabViews = [UIView]()
 
     public lazy var tabButtonContainer: UIView = {
         let view = UIView()
-        
+
         view.layer.borderWidth = config.tabButtonContainerBorderWidth
         view.layer.borderColor = config.tabButtonContainerBorderColor.cgColor
-        
+
         return view
     }()
 
@@ -76,7 +76,7 @@ open class PagingTabView: UIView {
             tabButtonContainer.addSubview(tabButton)
             tabButtons.append(tabButton)
         }
-        
+
         self.select(0)
     }
 
@@ -111,21 +111,21 @@ open class PagingTabView: UIView {
         guard selectedIndex != curSelectedIndex else {
             return
         }
-        
+
         delegate?.pagingTabView?(pagingTabView: self, toIndex: selectedIndex)
-        
+
         moveToIndex(index: selectedIndex, animated: config.animated, moveScrollView: true)
     }
-    
-    // MARK: - Private -
-    private func moveToIndex(index: Int, animated: Bool,  moveScrollView: Bool) {
+
+    // MARK: - Helper -
+    func moveToIndex(index: Int, animated: Bool, moveScrollView: Bool) {
         curSelectedIndex = index
 
-        if !animated{
+        if !animated {
             moveToIndex(index: index, moveScrollView: moveScrollView)
             return
         }
-        
+
         animationInProgress = true
 
         UIView.animate(withDuration: TimeInterval(config.animationDuration), delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
@@ -135,11 +135,11 @@ open class PagingTabView: UIView {
         })
     }
 
-    private func moveToIndex(index: Int, moveScrollView: Bool) {
+    func moveToIndex(index: Int, moveScrollView: Bool) {
         self.tabButtons.forEach { (button) in
             button.isSelected = false
         }
-        
+
         let button = self.tabButtons[index]
         button.isSelected = true
 
