@@ -48,7 +48,7 @@ extension ViewController: PagingTabViewDelegate {
 }
 extension ViewController: PagingTabViewDataSource {
     func segments(pagingTabView: PagingTabView) -> Int {
-        return 3
+        return 4
     }
 
     func tabTitle(pagingTabView: PagingTabView, index: Int) -> (image: UIImage?, title: String?) {

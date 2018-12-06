@@ -69,9 +69,12 @@ open class PagingTabView: UIView {
             tabViews.append(tabView)
 
             let tabButton = TabButton()
-            tabButton.button.tag = index
-            tabButton.button.addTarget(self, action: #selector(PagingTabView.buttonTapped(sender:)), for: .touchUpInside)
+            tabButton.tag = index
             tabButton.setup(titleInfo)
+
+            let tapGest = UITapGestureRecognizer(target: self, action: #selector(PagingTabView.buttonTapped(recognizer:)))
+            tapGest.numberOfTapsRequired = 1
+            tabButton.addGestureRecognizer(tapGest)
 
             tabButtonContainer.addSubview(tabButton)
             tabButtons.append(tabButton)
@@ -106,7 +109,9 @@ open class PagingTabView: UIView {
     }
 
     // MARK: - Events -
-    @objc internal func buttonTapped(sender: UIButton) {
+    @objc internal func buttonTapped(recognizer: UITapGestureRecognizer) {
+        let sender = recognizer.view as! TabButton
+
         let selectedIndex = sender.tag
         guard selectedIndex != curSelectedIndex else {
             return

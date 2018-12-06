@@ -19,12 +19,12 @@
 		8E956BF72BE7BBDA3F0B462C8A2E9EE6 /* Pods-SwiftPagingTabView_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F05A9A6EC366EDD77C15DC4ACEB8A6EB /* Pods-SwiftPagingTabView_Tests-dummy.m */; };
 		9C2653CF16E41A2BA293C8268FEC22ED /* Pods-SwiftPagingTabView_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD07B52410AA0BDB18F506E0345E99B /* Pods-SwiftPagingTabView_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9DD7EFC48DD23BF57737E0BB607AB47D /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23065E00AC4700FDEEE2BBA29922427B /* TabButton.swift */; };
-		B2486AC7730B8EB18B608BF817C55378 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4F4B23D5B3EBDAD6BE06DC7F86B1D8 /* Config.swift */; };
 		BB6002C9072D704C2300E2F3C5AFFC18 /* PureLayout+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = AA654F86E857710B01965E96AC15F25C /* PureLayout+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF4130DBBFA3BDBAD4DCFF7A2511A9D8 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FD488738DACC6BD28A4B8007AC9E22 /* NSLayoutConstraint+PureLayout.m */; };
 		C8D47607E7998B844DB74F5EA07EF8B5 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6990C47F02B6691DD4DA9D4504A36B /* ALView+PureLayout.m */; };
 		CB03DDB4D9431FCD191C5924B2604189 /* Pods-SwiftPagingTabView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E44ADEDE96F081CE311A44E6399123 /* Pods-SwiftPagingTabView_Example-dummy.m */; };
 		D3858A59287CB3B6D363AB04A18A8202 /* PagingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5F6F3AFC18141D730AD18A4E0034F7 /* PagingTabView.swift */; };
+		D9FBA29921B96E0100D968C9 /* PTVConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FBA29821B96E0100D968C9 /* PTVConfig.swift */; };
 		DCDECF5EC72EDED7A0090989C19291D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6998A05EE920FE05F8F3AAF734591F0 /* Foundation.framework */; };
 		DCF2F33AC17BC53B8FF3643D9FC4BBF4 /* ALView+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = F3D3F05D324772E907DB1D4DA2C89AA2 /* ALView+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF97FD99FEC6A0A41F542A28C3EF06B7 /* NSLayoutConstraint+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F7D472071E15F7DC98E66B5980E1549 /* NSLayoutConstraint+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,7 +103,6 @@
 		96F3FC8700E76EEFE4F70D52D253BAD6 /* SwiftPagingTabView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftPagingTabView-dummy.m"; sourceTree = "<group>"; };
 		A3E529431E376841F75E7E3DDB7A4855 /* Pods-SwiftPagingTabView_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftPagingTabView_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		AA654F86E857710B01965E96AC15F25C /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
-		AC4F4B23D5B3EBDAD6BE06DC7F86B1D8 /* Config.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Source/Config.swift; sourceTree = "<group>"; };
 		AD66E7A5004D2B8FAC0BCE6E75FAB158 /* Pods-SwiftPagingTabView_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftPagingTabView_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B1EDFC052AE79F471D9D9662260D445D /* SwiftPagingTabView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftPagingTabView.xcconfig; sourceTree = "<group>"; };
 		BB56F2CE76039F1587F8857287877CFA /* Pods-SwiftPagingTabView_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftPagingTabView_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		D6998A05EE920FE05F8F3AAF734591F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D87500AA33CA4A933595B88AD6CA26C8 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
 		D8EBB7A995B632F52BF505285BC072E0 /* Pods-SwiftPagingTabView_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SwiftPagingTabView_Example.modulemap"; sourceTree = "<group>"; };
+		D9FBA29821B96E0100D968C9 /* PTVConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PTVConfig.swift; path = Source/PTVConfig.swift; sourceTree = "<group>"; };
 		DDDCD45505F0DCA7960D3CD136949687 /* Pods-SwiftPagingTabView_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftPagingTabView_Example-resources.sh"; sourceTree = "<group>"; };
 		E6B44FE62012AF259FABF842385EAF85 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EE7069671C4FC7CD178436F40B2A9B79 /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 		A0BC29522C409658111A828F4F269360 /* SwiftPagingTabView */ = {
 			isa = PBXGroup;
 			children = (
-				AC4F4B23D5B3EBDAD6BE06DC7F86B1D8 /* Config.swift */,
+				D9FBA29821B96E0100D968C9 /* PTVConfig.swift */,
 				BB5F6F3AFC18141D730AD18A4E0034F7 /* PagingTabView.swift */,
 				23065E00AC4700FDEEE2BBA29922427B /* TabButton.swift */,
 				DDE5B6DA4867FDEE3B9D6AE99A51A8E2 /* Pod */,
@@ -526,7 +526,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2486AC7730B8EB18B608BF817C55378 /* Config.swift in Sources */,
+				D9FBA29921B96E0100D968C9 /* PTVConfig.swift in Sources */,
 				D3858A59287CB3B6D363AB04A18A8202 /* PagingTabView.swift in Sources */,
 				ECBD8A5E37DE144A140687E7ECB02CFF /* SwiftPagingTabView-dummy.m in Sources */,
 				9DD7EFC48DD23BF57737E0BB607AB47D /* TabButton.swift in Sources */,

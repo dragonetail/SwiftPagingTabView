@@ -6,8 +6,8 @@ public struct PagingTabViewConfig {
     public var animationDuration: CGFloat = 0.5
     public var tabButtonContainerBorderWidth: CGFloat = 0
     public var tabButtonContainerBorderColor: UIColor = UIColor.lightGray
-    public var tabButtonContainerHeight: CGFloat = 32
-    public var tabButtonHeight: CGFloat = 24
+    public var tabButtonContainerHeight: CGFloat = 36
+    public var tabButtonHeight: CGFloat = 30
     
     public init(){
         //noop
@@ -24,6 +24,7 @@ public struct TabButtonConfig {
     public var indicatorColor: UIColor = UIColor.flatSkyBlueColor()
     public var imageTintColor: UIColor = UIColor.lightGray
     public var imageTintColorForSelected: UIColor = UIColor.flatSkyBlueColor()
+    public var imageViewTopDownMargin: CGFloat = 5.0
 
     public init(){
         //noop
@@ -43,3 +44,4 @@ extension UIColor{
         return hsb(204, 78, 73)
     }
 }
+
