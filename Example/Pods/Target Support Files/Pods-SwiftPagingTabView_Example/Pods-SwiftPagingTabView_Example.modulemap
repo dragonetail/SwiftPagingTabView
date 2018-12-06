@@ -1,0 +1,6 @@
+framework module Pods_SwiftPagingTabView_Example {
+  umbrella header "Pods-SwiftPagingTabView_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

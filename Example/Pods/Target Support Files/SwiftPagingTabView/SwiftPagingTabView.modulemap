@@ -1,0 +1,6 @@
+framework module SwiftPagingTabView {
+  umbrella header "SwiftPagingTabView-umbrella.h"
+
+  export *
+  module * { export * }
+}
