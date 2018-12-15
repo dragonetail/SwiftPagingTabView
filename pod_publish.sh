@@ -14,7 +14,7 @@ echo TARGETVersion=${TARGETVersion}
 
 PREVersionTo=${PREVersion//\./\\\.}
 TARGETVersionTo=${TARGETVersion//\./\\\.}
-echo sed -i \'\' \"s/${PREVersion//\./\\\.}/${TARGETVersion//\./\\\.}/g\" ${PODSPEC}
+#echo sed -i \'\' \"s/${PREVersion//\./\\\.}/${TARGETVersion//\./\\\.}/g\" ${PODSPEC}
 sed -i '' "s/${PREVersionTo}/${TARGETVersionTo}/g" ${PODSPEC}
 
 echo "~~~~~~~~~~~~~~~~~~~~~~~~"
