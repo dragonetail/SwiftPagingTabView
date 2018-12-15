@@ -5,7 +5,7 @@ target 'SwiftPagingTabView_Example' do
 
   target 'SwiftPagingTabView_Tests' do
     inherit! :search_paths
-
+    
     
   end
 end

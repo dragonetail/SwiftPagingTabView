@@ -273,6 +273,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftPagingTabView_Example/Pods-SwiftPagingTabView_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftBaseBootstrap/SwiftBaseBootstrap.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftPagingTabView/SwiftPagingTabView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -280,6 +281,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftBaseBootstrap.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftPagingTabView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,10 @@
 PODS:
   - PureLayout (3.1.4)
-  - SwiftPagingTabView (0.1.0):
+  - SwiftBaseBootstrap (0.1.3):
     - PureLayout (~> 3.1.4)
+  - SwiftPagingTabView (0.0.3):
+    - PureLayout (~> 3.1.4)
+    - SwiftBaseBootstrap
 
 DEPENDENCIES:
   - SwiftPagingTabView (from `../`)
@@ -9,6 +12,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - PureLayout
+    - SwiftBaseBootstrap
 
 EXTERNAL SOURCES:
   SwiftPagingTabView:
@@ -16,8 +20,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
-  SwiftPagingTabView: 127b925f3ae8f479d7f6f0abb34a0e99e8499eb4
+  SwiftBaseBootstrap: 23881d8369d86791745a1c8b92418bda62b4f71a
+  SwiftPagingTabView: 9b753019755955a867bcfc32e5a6964733bfdd11
 
-PODFILE CHECKSUM: bc01062457f7ce6c15d2959044464fa24b775e72
+PODFILE CHECKSUM: 645525aa97209bc52781a36069faa955b039de55
 
 COCOAPODS: 1.5.3

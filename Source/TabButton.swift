@@ -1,14 +1,22 @@
 import UIKit
 import PureLayout
+import SwiftBaseBootstrap
 
-open class TabButton: UIView {
-    open var config: TabButtonConfig = TabButtonConfig()
+open class TabButton: BaseViewWithAutolayout {
+    open var config: TabButtonConfig = TabButtonConfig() {
+        didSet {
+            self.invalidateIntrinsicContentSize()
+            self.setNeedsUpdateConstraints()
+        }
+    }
 
     open var imageView: UIImageView?
     open var titleLabel: UILabel?
     open lazy var indicatorView: UIView = {
-        let view = UIView()
-        return view
+        let indicatorView = UIView().autoLayout("indicatorView")
+
+        addSubview(indicatorView)
+        return indicatorView
     }()
 
     open var isSelected: Bool = false {
@@ -18,6 +26,7 @@ open class TabButton: UIView {
                 titleLabel?.textColor = config.textColorForSelected
                 imageView?.tintColor = config.imageTintColorForSelected
                 indicatorView.isHidden = false
+                indicatorView.backgroundColor = self.config.indicatorColor
             } else {
                 titleLabel?.font = config.font
                 titleLabel?.textColor = config.textColor
@@ -27,97 +36,79 @@ open class TabButton: UIView {
         }
     }
 
-    open func setup(_ titleInfo: (image: UIImage?, title: String?)) {
-        if let title = titleInfo.title {
-            self.titleLabel = UILabel()
+    open var title: String? {
+        didSet {
+            guard let title = title else {
+                return
+            }
+            self.titleLabel = UILabel().autoLayout("titleLabel")
             self.titleLabel?.text = title
+
             addSubview(self.titleLabel!)
         }
-        if let image = titleInfo.image {
-            self.imageView = UIImageView()
+    }
+
+    open var image: UIImage? {
+        didSet {
+            guard let image = image else {
+                return
+            }
+            self.imageView = UIImageView().autoLayout("imageView")
             self.imageView?.image = image.withRenderingMode(.alwaysTemplate)
             imageView?.clipsToBounds = true
             imageView?.contentMode = .scaleToFill
             addSubview(self.imageView!)
         }
-
-        [indicatorView].forEach({
-            addSubview($0)
-        })
-
-        configure()
     }
 
-    open func configure(config: TabButtonConfig? = nil) {
-        if let config = config {
-            self.config = config
-        }
-
-        indicatorView.backgroundColor = self.config.indicatorColor
-
+    open override func setupAndComposeView() {
         self.invalidateIntrinsicContentSize()
+        self.setNeedsUpdateConstraints()
     }
 
-    open override func layoutSubviews() {
-        super.layoutSubviews()
+    // invoked only once
+    open override func setupConstraints() {
+        let imageSize = config.tabButtonHeight - config.imageViewTopDownMargin * 2
 
-        let imageSize = self.bounds.height - config.imageViewTopDownMargin * 2
-        let leftRightMargin = (self.bounds.width - intrinsicContentSize.width) / 2
-        let titleLabelHeight = titleLabel?.bounds.size.height ?? 0
-        let titleLabelTopDownMargin = (self.bounds.height - titleLabelHeight) / 2
-
-        defer {
-            
-        }
-
-        if let titleLabel = self.titleLabel,
-            let imageView = self.imageView {
-            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: config.imageViewTopDownMargin, left: leftRightMargin, bottom: config.imageViewTopDownMargin, right: 0), excludingEdge: .right)
-            imageView.autoSetDimensions(to: CGSize(width: imageSize, height: imageSize))
-            imageView.setNeedsDisplay()
-
-            titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: titleLabelTopDownMargin, left: 0, bottom: titleLabelTopDownMargin, right: leftRightMargin), excludingEdge: .left)
-            titleLabel.autoPinEdge(.left, to: .right, of: imageView, withOffset: 5)
-            
-            indicatorView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: leftRightMargin - 3, bottom: 0, right: leftRightMargin - 3), excludingEdge: .top)
-            indicatorView.autoSetDimension(.height, toSize: config.indicatorHeight)
-            return
-        }
-        if let titleLabel = self.titleLabel {
-            titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: titleLabelTopDownMargin, left: leftRightMargin, bottom: titleLabelTopDownMargin, right: leftRightMargin))
-            
-            indicatorView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: leftRightMargin - 3, bottom: 3, right: leftRightMargin - 3), excludingEdge: .top)
-            indicatorView.autoSetDimension(.height, toSize: config.indicatorHeight)
-            return
-        }
-
+        var indicatorViewTopAlign: UIView!
         if let imageView = self.imageView {
-            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: config.imageViewTopDownMargin, left: leftRightMargin, bottom: config.imageViewTopDownMargin, right: 0), excludingEdge: .right)
+            indicatorViewTopAlign = imageView
+            imageView.autoPinEdge(toSuperviewEdge: .left, withInset: config.indicatorPlusPadding)
+            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
             imageView.autoSetDimensions(to: CGSize(width: imageSize, height: imageSize))
-            imageView.setNeedsDisplay()
-            
-            //DO NOT Display
-            //indicatorView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: leftRightMargin - 3, bottom: 0, right: leftRightMargin - 3), excludingEdge: .top)
-            //indicatorView.autoSetDimension(.height, toSize: config.indicatorHeight)
-            return
         }
+
+        if let titleLabel = self.titleLabel {
+            indicatorViewTopAlign = titleLabel
+            titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+            if let imageView = self.imageView {
+                indicatorViewTopAlign = imageView
+                titleLabel.autoPinEdge(.left, to: .right, of: imageView, withOffset: config.paddingBetweenImageAndTitle)
+            } else {
+                titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: config.indicatorPlusPadding)
+            }
+        }
+        indicatorView.autoPinEdge(.top, to: .bottom, of: indicatorViewTopAlign, withOffset: 2)
+        indicatorView.autoSetDimension(.width, toSize: intrinsicContentSize.width)
+        indicatorView.autoSetDimension(.height, toSize: config.indicatorHeight)
+        indicatorView.autoAlignAxis(toSuperviewAxis: .vertical)
     }
 
     open override var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
         titleLabel?.sizeToFit()
 
-        let imageSize = self.bounds.height - config.imageViewTopDownMargin * 2
+        let imageSize = config.tabButtonHeight - config.imageViewTopDownMargin * 2
 
-        var width: CGFloat = 0.0
+        var width: CGFloat = config.indicatorPlusPadding * 2
         if let _ = imageView {
-            width = width + imageSize + 5.0
+            width = width + imageSize
+            if let _ = titleLabel {
+                width = width + config.paddingBetweenImageAndTitle
+            }
         }
         if let titleLabelWidth = titleLabel?.frame.size.width {
             width = width + titleLabelWidth
         }
-        return CGSize(width: width, height: size.height)
+        return CGSize(width: width, height: config.tabButtonHeight)
     }
-
-
 }

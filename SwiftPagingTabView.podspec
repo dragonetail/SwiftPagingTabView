@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftPagingTabView'
-  s.version          = '0.0.2'
+  s.version          = '0.0.3'
   s.summary          = 'Paging Tab View implement in swift4.2.'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Paging Tab View implement in swift4.2 using ScrollView and configurable design.
   s.source           = { :git => 'https://github.com/dragonetail/SwiftPagingTabView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '9.3'
   s.swift_version = '4.2'
 
   s.source_files = 'Source/**/*'
@@ -40,4 +40,5 @@ Paging Tab View implement in swift4.2 using ScrollView and configurable design.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'PureLayout', '~> 3.1.4'
+  s.dependency 'SwiftBaseBootstrap'
 end

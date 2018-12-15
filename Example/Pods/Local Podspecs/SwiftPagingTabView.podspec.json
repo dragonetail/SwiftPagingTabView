@@ -1,8 +1,8 @@
 {
   "name": "SwiftPagingTabView",
-  "version": "0.1.0",
-  "summary": "A short description of SwiftPagingTabView.",
-  "description": "TODO: Add long description of the pod here.",
+  "version": "0.0.3",
+  "summary": "Paging Tab View implement in swift4.2.",
+  "description": "Paging Tab View implement in swift4.2 using ScrollView and configurable design.",
   "homepage": "https://github.com/dragonetail/SwiftPagingTabView",
   "license": {
     "type": "MIT",
@@ -13,15 +13,19 @@
   },
   "source": {
     "git": "https://github.com/dragonetail/SwiftPagingTabView.git",
-    "tag": "0.1.0"
+    "tag": "0.0.3"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.3"
   },
+  "swift_version": "4.2",
   "source_files": "Source/**/*",
   "dependencies": {
     "PureLayout": [
       "~> 3.1.4"
+    ],
+    "SwiftBaseBootstrap": [
+
     ]
   }
 }

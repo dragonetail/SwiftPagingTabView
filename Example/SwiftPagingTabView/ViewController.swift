@@ -1,10 +1,11 @@
 import UIKit
 import SwiftPagingTabView
+import SwiftBaseBootstrap
 
-class ViewController: UIViewController {
+class ViewController: BaseViewControllerWithAutolayout {
 
     public lazy var pagingTabView: PagingTabView = {
-        let pagingTabView: PagingTabView = PagingTabView()
+        let pagingTabView: PagingTabView = PagingTabView().autoLayout("pagingTabView")
         pagingTabView.config = PagingTabViewConfig()
         pagingTabView.delegate = self
         pagingTabView.datasource = self
@@ -12,27 +13,19 @@ class ViewController: UIViewController {
         return pagingTabView
     }()
     public lazy var commandView: CommandView = {
-        let view = CommandView()
-        view.setup(pagingTabView: pagingTabView)
+        let view = CommandView().autoLayout("commandView")
+        view.pagingTabView = pagingTabView
         return view
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override open func setupAndComposeView() {
         self.view.addSubview(pagingTabView)
 
-        pagingTabView.reloadAndSetup()
+        pagingTabView.setupAndComposeView()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
+    override open func setupConstraints() {
         pagingTabView.autoPinEdgesToSuperviewSafeArea()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }
 extension ViewController: PagingTabViewDelegate {
@@ -42,7 +35,7 @@ extension ViewController: PagingTabViewDelegate {
 
     func reconfigure(pagingTabView: PagingTabView) {
         pagingTabView.tabButtons.forEach { (tabButton) in
-            tabButton.configure(config: TabButtonConfig())
+            tabButton.config = TabButtonConfig()
         }
     }
 }
@@ -63,9 +56,9 @@ extension ViewController: PagingTabViewDataSource {
 
     func tabView(pagingTabView: PagingTabView, index: Int) -> UIView {
         if index == 0 {
-            return commandView
+            return commandView.autoLayout("commandView")
         } else {
-            let view = UILabel()
+            let view = UILabel().autoLayout("View_\(index)")
             view.backgroundColor = UIColor.white
             view.text = "View " + String(index)
             view.textAlignment = .center
@@ -74,7 +67,7 @@ extension ViewController: PagingTabViewDataSource {
     }
 }
 
-class CommandView: UIView {
+class CommandView: BaseViewWithAutolayout {
     var isEnableImageTitle: Bool = false {
         didSet {
             if isEnableImageTitle {
@@ -86,44 +79,32 @@ class CommandView: UIView {
     }
 
     private lazy var label: UILabel = {
-        let label = UILabel()
+        let label = UILabel().autoLayout("label")
         label.text = "Hi, nice to meet you ~"
         return label
     }()
     private lazy var enableImageTitleButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .system).autoLayout("enableImageTitleButton")
         button.setTitle("Enable Image Tab Title", for: .normal)
         button.addTarget(self, action: #selector(CommandView.buttonTapped(sender:)), for: .touchUpInside)
 
         return button
     }()
 
+    var pagingTabView: PagingTabView?
     @objc internal func buttonTapped(sender: UIButton) {
         isEnableImageTitle = !isEnableImageTitle
 
-        pagingTabView.reloadAndSetup()
+        pagingTabView?.setupAndComposeView()
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private var pagingTabView: PagingTabView!
-    func setup(pagingTabView: PagingTabView) {
-        self.pagingTabView = pagingTabView
-
+    override open func setupAndComposeView() {
         [label, enableImageTitleButton].forEach({
             addSubview($0)
         })
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
+    override open func setupConstraints() {
         label.autoCenterInSuperview()
 
         enableImageTitleButton.autoAlignAxis(toSuperviewAxis: .vertical)
