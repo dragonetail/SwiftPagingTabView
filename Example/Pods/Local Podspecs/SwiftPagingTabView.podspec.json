@@ -1,6 +1,6 @@
 {
   "name": "SwiftPagingTabView",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "summary": "Paging Tab View implement in swift4.2.",
   "description": "Paging Tab View implement in swift4.2 using ScrollView and configurable design.",
   "homepage": "https://github.com/dragonetail/SwiftPagingTabView",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/dragonetail/SwiftPagingTabView.git",
-    "tag": "0.0.3"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "9.3"
