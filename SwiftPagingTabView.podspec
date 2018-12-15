@@ -40,5 +40,5 @@ Paging Tab View implement in swift4.2 using ScrollView and configurable design.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'PureLayout', '~> 3.1.4'
-  s.dependency 'SwiftBaseBootstrap', '~> 0.1.5'
+  s.dependency 'SwiftBaseBootstrap'
 end
