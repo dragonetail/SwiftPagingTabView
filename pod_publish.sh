@@ -12,8 +12,10 @@ fi
 echo PREVersion=${PREVersion}
 echo TARGETVersion=${TARGETVersion}
 
+PREVersionTo=${PREVersion//\./\\\.}
+TARGETVersionTo=${TARGETVersion//\./\\\.}
 echo sed -i \'\' \"s/${PREVersion//\./\\\.}/${TARGETVersion//\./\\\.}/g\" ${PODSPEC}
-sed -i '' "s/${PREVersion//\./\\\.}/${TARGETVersion//\./\\\.}/g" ${PODSPEC}
+sed -i '' "s/${PREVersionTo}/${TARGETVersionTo}/g" ${PODSPEC}
 
 echo "~~~~~~~~~~~~~~~~~~~~~~~~"
 echo "Add, commit and push ..."
