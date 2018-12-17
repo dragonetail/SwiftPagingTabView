@@ -33,20 +33,20 @@ open class PagingTabView: BaseViewWithAutolayout {
         let stackViewContainer = UIView().autoLayout("stackViewContainer")
 
         borderStackViewContainer(stackViewContainer)
-        
+
         self.addSubview(stackViewContainer)
         stackViewContainer.addSubview(tabButtonStackView)
 
         return stackViewContainer
     }()
-    func borderStackViewContainer(_ stackViewContainer: UIView){
+    func borderStackViewContainer(_ stackViewContainer: UIView) {
         stackViewContainer.layer.borderWidth = config.tabButtonContainerBorderWidth
         stackViewContainer.layer.borderColor = config.tabButtonContainerBorderColor.cgColor
         stackViewContainer.layer.cornerRadius = config.tabButtonContainerCornerRadius
         //stackViewContainer.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        stackViewContainer.clipsToBounds = true
+        //stackViewContainer.clipsToBounds = true
     }
-    
+
     public lazy var tabButtonStackView: UIStackView = {
         let tabButtonStackView = UIStackView().autoLayout("tabButtonStackView")
 
@@ -59,7 +59,7 @@ open class PagingTabView: BaseViewWithAutolayout {
     }()
 
     public lazy var scrollView: UIScrollView = {
-        let scrollView: UIScrollView = UIScrollView().autoLayout("PagingTabView")
+        let scrollView: UIScrollView = UIScrollView().autoLayout("scrollView")
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -77,16 +77,18 @@ open class PagingTabView: BaseViewWithAutolayout {
 
         for view in scrollView.subviews {
             view.removeFromSuperview()
+            view.removeConstraints(view.constraints)
         }
         tabViews.removeAll()
         for view in tabButtonStackView.arrangedSubviews {
             tabButtonStackView.removeArrangedSubview(view)
             view.removeFromSuperview()
+            view.removeConstraints(view.constraints)
         }
         tabButtons.removeAll()
 
         //Dummy for layout the leading
-        tabButtonStackView.addArrangedSubview(UIView())
+        tabButtonStackView.addArrangedSubview(UIView().autoLayout("dummy1"))
         let segments = datasource.segments(pagingTabView: self)
         for index in 0..<segments {
             let titleInfo: (image: UIImage?, title: String?) = datasource.tabTitle(pagingTabView: self, index: index)
@@ -108,12 +110,12 @@ open class PagingTabView: BaseViewWithAutolayout {
             tabButtons.append(tabButton)
         }
         //Dummy for layout the tailing
-        tabButtonStackView.addArrangedSubview(UIView())
+        tabButtonStackView.addArrangedSubview(UIView().autoLayout("dummy2"))
 
         self.delegate?.reconfigure?(pagingTabView: self)
 
         self.select(curSelectedIndex)
-            
+
 
         self.setNeedsUpdateConstraints()
         self.setNeedsLayout()
@@ -125,7 +127,7 @@ open class PagingTabView: BaseViewWithAutolayout {
         tabButtonStackView.autoPinEdgesToSuperviewEdges()
 
         scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        scrollView.autoPinEdge(.top, to: .bottom, of: tabButtonStackView)
+        scrollView.autoPinEdge(.top, to: .bottom, of: stackViewContainer)
     }
     open override func modifyConstraints() {
         for i in 0..<tabViews.count {
@@ -143,9 +145,9 @@ open class PagingTabView: BaseViewWithAutolayout {
         }
     }
 
-    //open override func layoutSubviews() {
-    //    super.layoutSubviews()
-    //}
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+    }
 
     // MARK: - Public Methods -
     open func select(_ index: Int, animated: Bool = true) {
@@ -203,7 +205,7 @@ extension PagingTabView: UIScrollViewDelegate
 {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard scrollView.frame.size.width != 0 else {
-                return //可能已经退出视图了
+            return //可能已经退出视图了
         }
         if !animationInProgress {
             var page = scrollView.contentOffset.x / scrollView.frame.size.width

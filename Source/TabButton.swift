@@ -68,6 +68,8 @@ open class TabButton: BaseViewWithAutolayout {
 
     // invoked only once
     open override func setupConstraints() {
+        self.autoSetDimension(.height, toSize: config.tabButtonHeight)
+        
         let imageSize = config.tabButtonHeight - config.imageViewTopDownMargin * 2
 
         var indicatorViewTopAlign: UIView!
