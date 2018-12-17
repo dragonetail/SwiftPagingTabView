@@ -23,7 +23,7 @@ open class PagingTabView: BaseViewWithAutolayout {
     public weak var delegate: PagingTabViewDelegate?
     public weak var datasource: PagingTabViewDataSource?
 
-    var curSelectedIndex = -1
+    var curSelectedIndex = 0
     var animationInProgress = false
 
     public var tabButtons = [TabButton]()
@@ -112,7 +112,8 @@ open class PagingTabView: BaseViewWithAutolayout {
 
         self.delegate?.reconfigure?(pagingTabView: self)
 
-        self.select(0)
+        self.select(curSelectedIndex)
+            
 
         self.setNeedsUpdateConstraints()
         self.setNeedsLayout()
@@ -201,6 +202,9 @@ open class PagingTabView: BaseViewWithAutolayout {
 extension PagingTabView: UIScrollViewDelegate
 {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView.frame.size.width != 0 else {
+                return //可能已经退出视图了
+        }
         if !animationInProgress {
             var page = scrollView.contentOffset.x / scrollView.frame.size.width
 

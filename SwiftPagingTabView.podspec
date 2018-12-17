@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftPagingTabView'
-  s.version          = '0.1.5'
+  s.version          = '0.1.6'
   s.summary          = 'Paging Tab View implement in swift4.2.'
 
 # This description is used to generate tags and improve search results.
