@@ -3,8 +3,8 @@ import PureLayout
 import SwiftBaseBootstrap
 
 @objc public protocol PagingTabViewDelegate: NSObjectProtocol {
-    @objc optional func pagingTabView(pagingTabView: PagingTabView, toIndex: Int)
     @objc optional func reconfigure(pagingTabView: PagingTabView)
+    @objc optional func willShowTabView(pagingTabView: PagingTabView, toIndex: Int, subTabView: UIView)
 }
 
 public protocol PagingTabViewDataSource: NSObjectProtocol {
@@ -23,7 +23,8 @@ open class PagingTabView: BaseViewWithAutolayout {
     public weak var delegate: PagingTabViewDelegate?
     public weak var datasource: PagingTabViewDataSource?
 
-    var curSelectedIndex = 0
+    public var curSelectedIndex = 0
+    public var transitionInProgress = false
     var animationInProgress = false
 
     public var tabButtons = [TabButton]()
@@ -52,7 +53,7 @@ open class PagingTabView: BaseViewWithAutolayout {
 
         tabButtonStackView.axis = .horizontal
         tabButtonStackView.alignment = .center
-        tabButtonStackView.distribution = .equalSpacing
+        tabButtonStackView.distribution = .fillEqually
         tabButtonStackView.spacing = 6
 
         return tabButtonStackView
@@ -116,7 +117,6 @@ open class PagingTabView: BaseViewWithAutolayout {
 
         self.select(curSelectedIndex)
 
-
         self.setNeedsUpdateConstraints()
         self.setNeedsLayout()
     }
@@ -154,6 +154,11 @@ open class PagingTabView: BaseViewWithAutolayout {
         moveToIndex(index: index, animated: animated, moveScrollView: true)
     }
 
+    open func updateTabView() {
+        delegate?.willShowTabView?(pagingTabView: self, toIndex: curSelectedIndex, subTabView: tabViews[curSelectedIndex])
+    }
+
+
     // MARK: - Events -
     @objc internal func buttonTapped(recognizer: UITapGestureRecognizer) {
         let sender = recognizer.view as! TabButton
@@ -163,7 +168,7 @@ open class PagingTabView: BaseViewWithAutolayout {
             return
         }
 
-        delegate?.pagingTabView?(pagingTabView: self, toIndex: selectedIndex)
+        delegate?.willShowTabView?(pagingTabView: self, toIndex: selectedIndex, subTabView: tabViews[selectedIndex])
 
         moveToIndex(index: selectedIndex, animated: config.animated, moveScrollView: true)
     }
@@ -204,7 +209,8 @@ open class PagingTabView: BaseViewWithAutolayout {
 extension PagingTabView: UIScrollViewDelegate
 {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView.frame.size.width != 0 else {
+        guard transitionInProgress == false, //正在旋转
+            scrollView.frame.size.width != 0 else {
             return //可能已经退出视图了
         }
         if !animationInProgress {
@@ -214,9 +220,10 @@ extension PagingTabView: UIScrollViewDelegate
                 page = page + CGFloat(1)
             }
 
-            if Int(page) != curSelectedIndex {
-                moveToIndex(index: Int(page), animated: config.animated, moveScrollView: false)
-                delegate?.pagingTabView?(pagingTabView: self, toIndex: Int(page))
+            let toIndex = Int(page)
+            if toIndex != curSelectedIndex {
+                moveToIndex(index: toIndex, animated: config.animated, moveScrollView: false)
+                delegate?.willShowTabView?(pagingTabView: self, toIndex: toIndex, subTabView: tabViews[toIndex])
             }
         }
     }

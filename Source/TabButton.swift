@@ -10,6 +10,12 @@ open class TabButton: BaseViewWithAutolayout {
         }
     }
 
+    open lazy var containerView: UIView = {
+        let containerView = UIView().autoLayout("containerView")
+        
+        addSubview(containerView)
+        return containerView
+    }()
     open var imageView: UIImageView?
     open var titleLabel: UILabel?
     open lazy var indicatorView: UIView = {
@@ -44,7 +50,7 @@ open class TabButton: BaseViewWithAutolayout {
             self.titleLabel = UILabel().autoLayout("titleLabel")
             self.titleLabel?.text = title
 
-            addSubview(self.titleLabel!)
+            containerView.addSubview(self.titleLabel!)
         }
     }
 
@@ -57,7 +63,7 @@ open class TabButton: BaseViewWithAutolayout {
             self.imageView?.image = image.withRenderingMode(.alwaysTemplate)
             imageView?.clipsToBounds = true
             imageView?.contentMode = .scaleToFill
-            addSubview(self.imageView!)
+            containerView.addSubview(self.imageView!)
         }
     }
 
@@ -69,7 +75,7 @@ open class TabButton: BaseViewWithAutolayout {
     // invoked only once
     open override func setupConstraints() {
         self.autoSetDimension(.height, toSize: config.tabButtonHeight)
-        
+        containerView.autoCenterInSuperview()
         let imageSize = config.tabButtonHeight - config.imageViewTopDownMargin * 2
 
         var indicatorViewTopAlign: UIView!
@@ -77,6 +83,7 @@ open class TabButton: BaseViewWithAutolayout {
             indicatorViewTopAlign = imageView
             imageView.autoPinEdge(toSuperviewEdge: .left, withInset: config.indicatorPlusPadding)
             imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
             imageView.autoSetDimensions(to: CGSize(width: imageSize, height: imageSize))
         }
 
@@ -88,6 +95,7 @@ open class TabButton: BaseViewWithAutolayout {
                 titleLabel.autoPinEdge(.left, to: .right, of: imageView, withOffset: config.paddingBetweenImageAndTitle)
             } else {
                 titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: config.indicatorPlusPadding)
+                titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
             }
         }
         indicatorView.autoPinEdge(.top, to: .bottom, of: indicatorViewTopAlign, withOffset: 2)
